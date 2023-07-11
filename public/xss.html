@@ -12,7 +12,7 @@
             const url = new URL(location.href);
             const message = url.searchParams.get("message");
             if (message !== null) {
-                document.querySelector("#result").innerHTML = message; // <img src onerror=alert('xss')>が挿入される
+                document.querySelector("#result").textContent = message;
             }
         </script>
     </body>
