@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>XSS 検証用ページ</title>
+        <script src="./purify.js"></script>
     </head>
     <body>
         <h1>XSS検証用ページ</h1>
@@ -11,7 +12,9 @@
             const url = new URL(location.href);
             const message = url.searchParams.get("message");
             if (message !== null) {
-                document.querySelector("#result").textContent = message;
+                const sanitizedMessage = DOMPurify.sanitize(message);
+                console.log("sanitizedMessage: " + sanitizedMessage);
+                document.querySelector("#result").innerHTML = sanitizedMessage;
             }
             
             // クエリパラメータのurlの内容を取得してlinkのhrefに取得したurlを設定する
