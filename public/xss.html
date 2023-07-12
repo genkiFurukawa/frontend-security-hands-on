@@ -8,11 +8,19 @@
         <div id="result"></div>
         <a id="link" href="#">リンクをクリック</a>
         <script>
-            // http://localhost:3000/xss.html?message=%3Cimg%20src%20onerror=alert(%27xss%27)%3E のようなURLでアクセスするとポップアップが出る
             const url = new URL(location.href);
             const message = url.searchParams.get("message");
             if (message !== null) {
                 document.querySelector("#result").textContent = message;
+            }
+            
+            // クエリパラメータのurlの内容を取得してlinkのhrefに取得したurlを設定する
+            // http://localhost:3000/xss.html?message=%3Cimg%20src%20onerror=alert(%27xss%27)%3E&url=https://example.com
+            const urlStr = url.searchParams.get("url");
+            console.log(urlStr);
+            if (urlStr !== null) {
+                const linkUrl = new URL(urlStr, url.origin);
+                document.querySelector("#link").href = linkUrl;
             }
         </script>
     </body>
